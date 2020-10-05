@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <algorithm>
+#include<string>
 using namespace std;
 struct product {
     string name;
@@ -30,6 +30,10 @@ struct product {
             return true;
         }
         else { return false; }
+    }
+    bool operator==(const product& p) {
+        if (this->name == p.name) { return true; }
+        else return false;
     }
 };
 struct node
@@ -171,16 +175,34 @@ public:
     }
     CircularList list_of_same(CircularList object) {
         CircularList result;
+        //node* point = new node;
+        //point = head;
+        //node* point_obj = new node;
+        //node* obj_head = new node;
+        //for (int i = 1; i < amount(); i++) {
+        //    obj_head = object.get_head();
+        //    for (int j = 1; j < object.amount(); j++) {                
+        //        if (point == point_obj || point->data == point_obj->data)
+        //        {
+        //            result.createnode(point->data);
+        //        }
+        //        point_obj = point_obj->next;
+        //    }
+        //    point = point->next;
+        //}
+        //return result;
+        
         node* point = new node;
         point = head;
         node* point_obj = new node;
         node* obj_head = object.get_head();
         do
         {
+            point_obj = obj_head;
             do 
             {
-                point_obj = obj_head;
-                if (point == point_obj || point->data.name == point_obj->data.name)
+               
+                if (point == point_obj || point->data == point_obj->data)
                 {
                     result.createnode(point->data);
                 }
@@ -189,7 +211,7 @@ public:
             } while (point_obj != obj_head);            
             point = point->next;            
         } while (point != head);
-        return object;
+        return result;
     }
     void sort_by_increase() {
         node* current = new node;
@@ -279,37 +301,24 @@ public:
 
 int main()
 {
-    CircularList concernA, concernB;
-   // product p1;
-   // p1.name = "first";
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.createnode(p1);
-   // A.display();
-   // cout << endl;
-   // B = A.copy();
-   // B.display();
-   // C = A.merge(B);
-   //// C.display();
-   // A.delete_each_n(2);
-   // //C.delete_position(1);
-   // cout << "after cutting"<<endl;
-   // A.display();
-   // cout << "after cleaning"<<endl;
-   // A.clean();
-   // //B.moove_by_n_possitions(4, 1);
-   // node* theHead = new node;
-   // theHead = A.get_head();
-   //// deleteList(&theHead);
-   // A.display();
-   ////cout <<  A.amount();
+    CircularList concernA, concernB, commonProducts;
+    for (int i = 1; i <= 10; i++) {
+        product p1;
+        string str = to_string(i);
+        p1.name = str;
+        concernA.createnode(p1);
+    }
+    for (int i = 1; i <= 10; i++) {
+        product p1;
+        string str = to_string(i*2);
+        p1.name = str;
+        concernB.createnode(p1);
+    }
+    cout << "concern A" << endl;
+    concernA.display();
+    cout << "concern B" << endl;
+    concernB.display();
+    commonProducts = concernA.list_of_same(concernB);
+    cout << "list of common" << endl;
+    commonProducts.display();
 }
