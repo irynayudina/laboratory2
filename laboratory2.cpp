@@ -3,6 +3,18 @@
 using namespace std;
 struct product {
     string name;
+    bool operator<(const product & p) {
+        
+        if (this->name[0] < p.name[0]) {
+            return true;
+        }
+    }
+    bool operator>(const product& p) {
+
+        if (this->name[0] > p.name[0]) {
+            return true;
+        }
+    }
 };
 struct node
 {
@@ -171,9 +183,16 @@ public:
         current = head;
         index = current->next;
         while (succes != 0) {
+            n = amount();
             while (n > 2) {
                 --n;
                 succes = 0;
+                if (current->data > index->data) {
+                    ++succes;
+                    product prod = current->data;
+                    current->data = index->data;
+                    index->data = prod;
+                }
                 //Compare data of currentand index node.If current's data is greater than the index's data then, swap the data between them.
                 //in the if block succes +1;
                 current = current->next;
@@ -182,7 +201,29 @@ public:
         }        
     }
     void sort_by_decrease() {
-
+        node* current = new node;
+        node* index = new node;
+        int n = amount();
+        int succes = 1;
+        current = head;
+        index = current->next;
+        while (succes != 0) {
+            n = amount();
+            while (n > 2) {
+                --n;
+                succes = 0;
+                if (current->data < index->data) {
+                    ++succes;
+                    product prod = current->data;
+                    current->data = index->data;
+                    index->data = prod;
+                }
+                //Compare data of currentand index node.If current's data is less than the index's data then, swap the data between them.
+                //in the if block succes +1;
+                current = current->next;
+                index = index->next;
+            }
+        }
     }
     void delete_each_n(int n) {
         int count = 1;
