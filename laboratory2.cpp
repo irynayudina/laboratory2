@@ -302,13 +302,18 @@ public:
 int main()
 {
     CircularList concernA, concernB, commonProducts;
-    for (int i = 1; i <= 10; i++) {
+    int s1, s2;
+    cout << "enter the size of first list" << endl;
+    cin >> s1;
+    cout << "enter the size of second list" << endl;
+    cin >> s2;
+    for (int i = 1; i <= s1; i++) {
         product p1;
         string str = to_string(i);
         p1.name = str;
         concernA.createnode(p1);
     }
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= s2; i++) {
         product p1;
         string str = to_string(i*2);
         p1.name = str;
