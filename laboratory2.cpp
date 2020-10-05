@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <algorithm>
 using namespace std;
 struct product {
     string name;
@@ -63,9 +64,23 @@ public:
         return Amount;
     }
     //required methods
-    void moove_by_n_possitions(node * temp) 
+    void moove_by_n_possitions(int pos_of_elem, int n) 
     {
-        
+        node * previous = new node;
+        node* current = new node;
+        node* _next = new node;
+        previous = head;
+        for (int i = 1;  i < pos_of_elem - 1; i++) 
+        {
+            previous = previous->next;
+        }
+        current = previous->next;
+        _next = current->next;
+        for (int i = 0; i < n; i++) {
+            previous->next = _next;
+            current->next = _next->next;
+            _next->next = current;
+        }       
     }
     CircularList copy()
     {
@@ -137,7 +152,7 @@ public:
             do 
             {
                 point_obj = obj_head;
-                if (point == point_obj) 
+                if (point == point_obj || point->data.name == point_obj->data.name)
                 {
                     result.createnode(point->data);
                 }
@@ -149,7 +164,7 @@ public:
         return object;
     }
     void sort_by_increase_decrease() {
-
+        
     }
     void delete_each_n(int n) {
         int count = 1;
@@ -206,7 +221,6 @@ public:
     }
 };
 
-
 int main()
 {
     cout << "Hello World!\n";
@@ -237,6 +251,7 @@ int main()
     A.display();
     cout << "after cleaning"<<endl;
     A.clean();
+    B.moove_by_n_possitions(4, 1);
    // A.display();
    //cout <<  A.amount();
 }
