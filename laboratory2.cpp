@@ -163,8 +163,11 @@ public:
         } while (point != head);
         return object;
     }
-    void sort_by_increase_decrease() {
-        
+    void sort_by_increase() {
+
+    }
+    void sort_by_decrease() {
+
     }
     void delete_each_n(int n) {
         int count = 1;
@@ -186,40 +189,76 @@ public:
     }
     void clean() 
     {
-        /*node* temp = head;
-        node* current = head;
-        head = head->next;
-        delete head;
-        do
-        {
-            temp = temp->next;
-        } while (temp != head);*/
-        node* temp = new node;
-        node* temp_head = new node;
+       // /*node* temp = head;
+       // node* current = head;
+       // head = head->next;
+       // delete head;
+       // do
+       // {
+       //     temp = temp->next;
+       // } while (temp != head);*/
+       // node* temp = new node;
+       // node* temp_head = new node;
+       // node* previous = new node;
+       // temp = head;
+       // temp_head = head;
+       //     do
+       //     {
+       //         previous = temp;
+       //         temp = temp->next;
+       //         delete previous;
+       //     } while (temp != temp_head);
+       //int n = amount();
+       // node* previous = new node;
+       // node* current = new node;
+       // current = head;
+       // while (n-1)
+       // {
+       //     delete
+       //     --n;
+       // }*/
+        //delete_each_n(1);
+        int n = amount();
         node* previous = new node;
-        temp = head;
-        temp_head = head;
-            do
-            {
-                previous = temp;
-                temp = temp->next;
-                delete previous;
-            } while (temp != temp_head);
-       /* int n = amount();
-        node* previous = new node;
-        node* current = new node;
-        current = head;
-        while (n-1)
+        node* current = new node;        
+        previous = head;
+        while (n > 2)
         {
-            previous = current;
-            current = current->next;
-            previous->next = current->next;
-            delete current;
             --n;
-        }*/
-        
+           // previous = current;
+            current = previous->next;
+            free(previous);
+            previous = current;
+            
+        }
+        head = NULL;
+        //free( head);
+        /*for (int i = 2; i <= n; i++) {
+            delete_from_n_possition(i);
+        }
+        delete head;*/
     }
+
 };
+
+void deleteList(node** head_ref)
+{
+
+    /* deref head_ref to get the real head */
+    node* current = *head_ref;
+    node* next;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+
+    /* deref head_ref to affect the real head back
+        in the caller. */
+    *head_ref = NULL;
+}
 
 int main()
 {
@@ -251,7 +290,10 @@ int main()
     A.display();
     cout << "after cleaning"<<endl;
     A.clean();
-    B.moove_by_n_possitions(4, 1);
-   // A.display();
+    //B.moove_by_n_possitions(4, 1);
+    node* theHead = new node;
+    theHead = A.get_head();
+   // deleteList(&theHead);
+    A.display();
    //cout <<  A.amount();
 }
