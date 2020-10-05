@@ -8,12 +8,28 @@ struct product {
         if (this->name[0] < p.name[0]) {
             return true;
         }
+        else if (this->name[0] == p.name[0]) {
+            for (int i = 0; i < ((this->name.length() < p.name.length()) ? this->name.length() : p.name.length()); i++)
+            {
+                if (this->name[i] > p.name[i]) { return false; }
+            }
+            return true;
+        }
+        else { return false; }
     }
     bool operator>(const product& p) {
 
         if (this->name[0] > p.name[0]) {
             return true;
         }
+        else if (this->name[0] == p.name[0]) {
+            for (int i = 0; i < ((this->name.length() < p.name.length()) ? this->name.length() : p.name.length()); i++)
+            {
+                if (this->name[i] < p.name[i]) { return false; }
+            }
+            return true;
+        }
+        else { return false; }
     }
 };
 struct node
@@ -263,38 +279,37 @@ public:
 
 int main()
 {
-    cout << "Hello World!\n";
-    CircularList A, B, C, E;
-    product p1;
-    p1.name = "first";
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.createnode(p1);
-    A.display();
-    cout << endl;
-    B = A.copy();
-    B.display();
-    C = A.merge(B);
-   // C.display();
-    A.delete_each_n(2);
-    //C.delete_position(1);
-    cout << "after cutting"<<endl;
-    A.display();
-    cout << "after cleaning"<<endl;
-    A.clean();
-    //B.moove_by_n_possitions(4, 1);
-    node* theHead = new node;
-    theHead = A.get_head();
-   // deleteList(&theHead);
-    A.display();
-   //cout <<  A.amount();
+    CircularList concernA, concernB;
+   // product p1;
+   // p1.name = "first";
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.createnode(p1);
+   // A.display();
+   // cout << endl;
+   // B = A.copy();
+   // B.display();
+   // C = A.merge(B);
+   //// C.display();
+   // A.delete_each_n(2);
+   // //C.delete_position(1);
+   // cout << "after cutting"<<endl;
+   // A.display();
+   // cout << "after cleaning"<<endl;
+   // A.clean();
+   // //B.moove_by_n_possitions(4, 1);
+   // node* theHead = new node;
+   // theHead = A.get_head();
+   //// deleteList(&theHead);
+   // A.display();
+   ////cout <<  A.amount();
 }
