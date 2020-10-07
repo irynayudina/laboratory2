@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include<string>
+#include <ctime>
 using namespace std;
 struct product {
     string name;
@@ -97,7 +98,7 @@ public:
     //required methods
     void moove_by_n_possitions(int pos_of_elem, int n)
     {
-        if (pos_of_elem > amount()) { return; }
+        if (pos_of_elem > amount() || n > amount()-pos_of_elem) { return; }
         node* previous = new node;
         node* current = new node;
         node* _next = new node;
@@ -110,10 +111,13 @@ public:
         current = previous->next;
         _next = current->next;
         for (int i = 0; i < n; i++) {
-            if (previous->next == NULL) { previous->next = head; }
             previous->next = _next;
             current->next = _next->next;
             _next->next = current;
+
+            previous = previous->next;
+            current = previous->next;
+            _next = current->next;
         }
     }
     List copy()
@@ -149,6 +153,7 @@ public:
     void delete_from_n_possition(int n)////////////same///////////////////
     {
         if (n > amount()) { return; }
+        if (n == 1) { clean(); return; }
         node* previous = new node;
         node* current = new node;
         current = head;
@@ -181,23 +186,6 @@ public:
     }
     List list_of_same(List object) {
         List result;
-        //node* point = new node;
-        //point = head;
-        //node* point_obj = new node;
-        //node* obj_head = new node;
-        //for (int i = 1; i < amount(); i++) {
-        //    obj_head = object.get_head();
-        //    for (int j = 1; j < object.amount(); j++) {                
-        //        if (point == point_obj || point->data == point_obj->data)
-        //        {
-        //            result.createnode(point->data);
-        //        }
-        //        point_obj = point_obj->next;
-        //    }
-        //    point = point->next;
-        //}
-        //return result;
-
         node* point = new node;
         point = head;
         node* point_obj = new node;
@@ -224,9 +212,17 @@ public:
         node* current = new node;
         node* index = new node;
         int n = amount();
-        int succes = 1;
+        if (n == 1) { return; }
         current = head;
         index = current->next;
+        if (n == 2 && current->data > index->data) {
+            product prod = current->data;
+            current->data = index->data;
+            index->data = prod;
+            return;
+        }
+        else if (n == 2) { return; }
+        int succes = 1;
         while (succes != 0) {
             n = amount();
             while (n > 2) {
@@ -243,14 +239,22 @@ public:
             }
         }
     }
-    void sort_by_decrease() //////////////saame////////////
+    void sort_by_decrease() //////////////same////////////
     {
         node* current = new node;
         node* index = new node;
         int n = amount();
-        int succes = 1;
+        if (n == 1) { return; }
         current = head;
         index = current->next;
+        if (n == 2 && current->data > index->data) {
+            product prod = current->data;
+            current->data = index->data;
+            index->data = prod;
+            return;
+        }
+        else if (n == 2) { return; }
+        int succes = 1;
         while (succes != 0) {
             n = amount();
             while (n > 2) {
@@ -270,6 +274,7 @@ public:
     void delete_each_n(int n)
     {
         if (n > amount()) { return; }
+        if (n == 1) { clean(); return; }
         int count = 1;
         int _amount = 0;
         node* temp = new node;
@@ -361,14 +366,14 @@ public:
     }
     //required methods
     void moove_by_n_possitions(int pos_of_elem, int n) 
-    {
+    {        
         if (pos_of_elem > amount()) { return; }
-        node * previous = new node;
+        node* previous = new node;
         node* current = new node;
         node* _next = new node;
         previous = head;
-        
-        for (int i = 1;  i < pos_of_elem - 1; i++) 
+
+        for (int i = 1; i < pos_of_elem - 1; i++)
         {
             previous = previous->next;
         }
@@ -378,7 +383,11 @@ public:
             previous->next = _next;
             current->next = _next->next;
             _next->next = current;
-        }       
+
+            previous = previous->next;
+            current = previous->next;
+            _next = current->next;
+        }
     }
     CircularList copy()
     {
@@ -392,13 +401,6 @@ public:
         } while (point != head);
         return temp;
     }
-    /*void insert_start(product value)
-    {
-        node* temp = new node;
-        temp->data = value;
-        temp->next = head;
-        head = temp;
-    }*/
     CircularList merge(CircularList object)
     {
         node* point = new node;
@@ -410,54 +412,8 @@ public:
         } while (point != head);
         return object;
     }
-    /*void delete_from_n_possition(int n) 
-    {
-        node* previous = new node;
-        node* current = new node;
-        current = head;
-        while (n > 1) 
-        {
-            previous = current;
-            current = current->next;
-            --n;
-        }
-        previous->next = current->next;
-        delete current;
-    }*/
-    /*void insert_after_position(int pos, product value)
-    {
-        node* pre = new node;
-        node* cur = new node;
-        node* temp = new node;
-        cur = head;
-        for (int i = 1; i < pos; i++)
-        {
-            pre = cur;
-            cur = cur->next;
-        }
-        temp->data = value;
-        pre->next = temp;
-        temp->next = cur;
-    }*/
     CircularList list_of_same(CircularList object) {
-        CircularList result;
-        //node* point = new node;
-        //point = head;
-        //node* point_obj = new node;
-        //node* obj_head = new node;
-        //for (int i = 1; i < amount(); i++) {
-        //    obj_head = object.get_head();
-        //    for (int j = 1; j < object.amount(); j++) {                
-        //        if (point == point_obj || point->data == point_obj->data)
-        //        {
-        //            result.createnode(point->data);
-        //        }
-        //        point_obj = point_obj->next;
-        //    }
-        //    point = point->next;
-        //}
-        //return result;
-        
+        CircularList result;        
         node* point = new node;
         point = head;
         node* point_obj = new node;
@@ -478,59 +434,11 @@ public:
             point = point->next;            
         } while (point != head);
         return result;
+
     }
-    //void sort_by_increase() {
-    //    node* current = new node;
-    //    node* index = new node;
-    //    int n = amount();
-    //    int succes = 1;
-    //    current = head;
-    //    index = current->next;
-    //    while (succes != 0) {
-    //        n = amount();
-    //        while (n > 2) {
-    //            --n;
-    //            succes = 0;
-    //            if (current->data > index->data) {
-    //                ++succes;
-    //                product prod = current->data;
-    //                current->data = index->data;
-    //                index->data = prod;
-    //            }
-    //            //Compare data of currentand index node.If current's data is greater than the index's data then, swap the data between them.
-    //            //in the if block succes +1;
-    //            current = current->next;
-    //            index = index->next;
-    //        }
-    //    }        
-    //}
-    //void sort_by_decrease() {
-    //    node* current = new node;
-    //    node* index = new node;
-    //    int n = amount();
-    //    int succes = 1;
-    //    current = head;
-    //    index = current->next;
-    //    while (succes != 0) {
-    //        n = amount();
-    //        while (n > 2) {
-    //            --n;
-    //            succes = 0;
-    //            if (current->data < index->data) {
-    //                ++succes;
-    //                product prod = current->data;
-    //                current->data = index->data;
-    //                index->data = prod;
-    //            }
-    //            //Compare data of currentand index node.If current's data is less than the index's data then, swap the data between them.
-    //            //in the if block succes +1;
-    //            current = current->next;
-    //            index = index->next;
-    //        }
-    //    }
-    //}
     void delete_each_n(int n) {
         if (n > amount()) { return; }
+        if (n == 1) { clean(); return; }
         int count = 1;
         int _amount = 0;
         node* temp = new node;
@@ -546,25 +454,8 @@ public:
                 delete_from_n_possition(count);
             }
             ++count;
-        }
-        
+        }        
     }
-  /*  void clean() 
-    {
-        int n = amount();
-        node* previous = new node;
-        node* current = new node;        
-        previous = head;
-        while (n > 2)
-        {
-            --n;
-            current = previous->next;
-            delete previous;
-            previous = current;
-            
-        }
-        head = NULL;
-    }*/
 };
 
 int main()
@@ -573,6 +464,7 @@ int main()
     cout << "Part 1" << endl;
     List list, list2;
     product p1;
+    int num_of_elem, ind;
     p1.name = "name";
     int sl1, sl2;
     cout << "enter the size of first list" << endl;
@@ -585,71 +477,84 @@ int main()
         p1.name = str;
         list.createnode(p1);
     }
-    for (int i = 1; i <= sl1; i++) {
+    for (int i = 1; i <= sl2; i++) {
         product p1;
         string str = "product" + to_string(i*2);
         p1.name = str;
         list2.createnode(p1);
     }
-    cout << "choose the action" << endl;
-    cout << "1 - move j element by n positions" << endl;
-    cout << "2 - make a copy of the list" << endl;
-    cout << "3 - add to the top" << endl;
-    cout << "4 - merge to lists" << endl;
-    cout << "5 - delete n element from the list" << endl;
-    cout << "6 - insert after n element of the list" << endl;
-    cout << "7 - make a list of common elements of 2 given lists" << endl;
-    cout << "8 - sort elements of list by increase" << endl;
-    cout << "9 - sort elements of list by dicrease" << endl;
-    cout << "10 - delete each n element" << endl;
-    cout << "11 - clean the list" << endl;
     int choise = 0;
-    cin >> choise;
-    switch (choise) {
-    case 1:
-        list.moove_by_n_possitions(4, 3);
-        list.display();
-        break;
-    case 2:
-        list2 = list.copy();
-        list2.display();
-        break;
-    case 3:
-        list.insert_start(p1);
-        list.display();
-        break;
-    case 4:
-        list.merge(list2);
-        list2.display();
-        break;
-    case 5:
-        list.delete_from_n_possition(3);
-        list.display();
-        break;
-    case 6:
-        list.insert_after_position(3, p1);
-        list.display();
-        break;
-    case 7:
-        list.list_of_same(list2);
-        list.display();
-        break;
-    case 8:
-        list.sort_by_increase();
-        list.display();
-        break;
-    case 9:
-        list.sort_by_decrease();
-        list.display();
-        break;
-    case 10:
-        list.delete_each_n(2);
-        list.display();
-        break;
-    case 11:
-        list.clean();
-        list.display();
-        break;
+    while (choise != 12) {
+        cout << "choose the action" << endl;
+        cout << "1 - move j element by n positions" << endl;
+        cout << "2 - make a copy of the list" << endl;
+        cout << "3 - add to the top" << endl;
+        cout << "4 - merge to lists" << endl;
+        cout << "5 - delete n element from the list" << endl;
+        cout << "6 - insert after n element of the list" << endl;
+        cout << "7 - make a list of common elements of 2 given lists" << endl;
+        cout << "8 - sort elements of list by increase" << endl;
+        cout << "9 - sort elements of list by dicrease" << endl;
+        cout << "10 - delete each n element" << endl;
+        cout << "11 - clean the list" << endl;
+        cout << "12 - exit this part of menu" << endl;
+        cin >> choise;
+        switch (choise) {
+        case 1:
+            cout << "enter a number of the element you want to move" << endl;
+            cin >> num_of_elem;
+            cout << "how many positions do you want to move the element?" << endl;
+            cin >> ind;
+            list.moove_by_n_possitions(num_of_elem, ind);
+            list.display();
+            break;
+        case 2:
+            list2 = list.copy();
+            list2.display();
+            break;
+        case 3:
+            list.insert_start(p1);
+            list.display();
+            break;
+        case 4:
+            list.merge(list2);
+            list2.display();
+            break;
+        case 5:
+            cout << "enter a number of the element you want to delete" << endl;
+            cin >> num_of_elem;
+            list.delete_from_n_possition(num_of_elem);
+            list.display();
+            break;
+        case 6:
+            cout << "enter a number of the position you want to insert at" << endl;
+            cin >> ind;
+            list.insert_after_position(ind, p1);
+            list.display();
+            break;
+        case 7:
+            list.list_of_same(list2);
+            list.display();
+            break;
+        case 8:
+            list.sort_by_increase();
+            list.display();
+            break;
+        case 9:
+            list.sort_by_decrease();
+            list.display();
+            break;
+        case 10:
+            cout << "enter n to delete each n element" << endl;
+            cin >> ind;
+            list.delete_each_n(ind);
+            list.display();
+            break;
+        case 11:
+            list.clean();
+            list.display();
+            break;
+        }
     }
 
     //////////part 2 //////////////////////
@@ -673,6 +578,7 @@ int main()
         concernB.createnode(p1);
     }
     cout << "concern A" << endl;
+    concernA.display();
     concernA.display();
     cout << "concern B" << endl;
     concernB.display();
