@@ -97,10 +97,12 @@ public:
     //required methods
     void moove_by_n_possitions(int pos_of_elem, int n)
     {
+        if (pos_of_elem > amount()) { return; }
         node* previous = new node;
         node* current = new node;
         node* _next = new node;
         previous = head;
+        
         for (int i = 1; i < pos_of_elem - 1; i++)
         {
             previous = previous->next;
@@ -146,9 +148,11 @@ public:
     }
     void delete_from_n_possition(int n)////////////same///////////////////
     {
+        if (n > amount()) { return; }
         node* previous = new node;
         node* current = new node;
         current = head;
+        
         while (n > 1)
         {
             previous = current;
@@ -160,10 +164,12 @@ public:
     }
     void insert_after_position(int pos, product value)//same//////////////////////
     {
+        if (pos > amount()) { return; }
         node* pre = new node;
         node* cur = new node;
         node* temp = new node;
         cur = head;
+        
         for (int i = 1; i < pos; i++)
         {
             pre = cur;
@@ -232,8 +238,6 @@ public:
                     current->data = index->data;
                     index->data = prod;
                 }
-                //Compare data of currentand index node.If current's data is greater than the index's data then, swap the data between them.
-                //in the if block succes +1;
                 current = current->next;
                 index = index->next;
             }
@@ -258,8 +262,6 @@ public:
                     current->data = index->data;
                     index->data = prod;
                 }
-                //Compare data of currentand index node.If current's data is less than the index's data then, swap the data between them.
-                //in the if block succes +1;
                 current = current->next;
                 index = index->next;
             }
@@ -267,16 +269,18 @@ public:
     }
     void delete_each_n(int n)
     {
+        if (n > amount()) { return; }
         int count = 1;
-        int amount = 0;
+        int _amount = 0;
         node* temp = new node;
         temp = head;
+        
         while (temp != NULL)
         {
             temp = temp->next;
-            ++amount;
+            ++_amount;
         } 
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < _amount; i++) {
             if (count % n == 0) {
                 delete_from_n_possition(count);
             }
@@ -358,10 +362,12 @@ public:
     //required methods
     void moove_by_n_possitions(int pos_of_elem, int n) 
     {
+        if (pos_of_elem > amount()) { return; }
         node * previous = new node;
         node* current = new node;
         node* _next = new node;
         previous = head;
+        
         for (int i = 1;  i < pos_of_elem - 1; i++) 
         {
             previous = previous->next;
@@ -524,16 +530,18 @@ public:
     //    }
     //}
     void delete_each_n(int n) {
+        if (n > amount()) { return; }
         int count = 1;
-        int amount = 0;
+        int _amount = 0;
         node* temp = new node;
         temp = head;
+        
         do
         {
             temp = temp->next;
-            ++amount;
+            ++_amount;
         } while (temp != head);
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < _amount; i++) {
             if (count % n == 0) {
                 delete_from_n_possition(count);
             }
@@ -562,9 +570,90 @@ public:
 int main()
 {
     ////part 1 //////////////////////////
-    List list;
+    cout << "Part 1" << endl;
+    List list, list2;
+    product p1;
+    p1.name = "name";
+    int sl1, sl2;
+    cout << "enter the size of first list" << endl;
+    cin >> sl1;
+    cout << "enter the size of second list" << endl;
+    cin >> sl2;
+    for (int i = 1; i <= sl1; i++) {
+        product p1;
+        string str = "product" + to_string(i);
+        p1.name = str;
+        list.createnode(p1);
+    }
+    for (int i = 1; i <= sl1; i++) {
+        product p1;
+        string str = "product" + to_string(i*2);
+        p1.name = str;
+        list2.createnode(p1);
+    }
+    cout << "choose the action" << endl;
+    cout << "1 - move j element by n positions" << endl;
+    cout << "2 - make a copy of the list" << endl;
+    cout << "3 - add to the top" << endl;
+    cout << "4 - merge to lists" << endl;
+    cout << "5 - delete n element from the list" << endl;
+    cout << "6 - insert after n element of the list" << endl;
+    cout << "7 - make a list of common elements of 2 given lists" << endl;
+    cout << "8 - sort elements of list by increase" << endl;
+    cout << "9 - sort elements of list by dicrease" << endl;
+    cout << "10 - delete each n element" << endl;
+    cout << "11 - clean the list" << endl;
+    int choise = 0;
+    cin >> choise;
+    switch (choise) {
+    case 1:
+        list.moove_by_n_possitions(4, 3);
+        list.display();
+        break;
+    case 2:
+        list2 = list.copy();
+        list2.display();
+        break;
+    case 3:
+        list.insert_start(p1);
+        list.display();
+        break;
+    case 4:
+        list.merge(list2);
+        list2.display();
+        break;
+    case 5:
+        list.delete_from_n_possition(3);
+        list.display();
+        break;
+    case 6:
+        list.insert_after_position(3, p1);
+        list.display();
+        break;
+    case 7:
+        list.list_of_same(list2);
+        list.display();
+        break;
+    case 8:
+        list.sort_by_increase();
+        list.display();
+        break;
+    case 9:
+        list.sort_by_decrease();
+        list.display();
+        break;
+    case 10:
+        list.delete_each_n(2);
+        list.display();
+        break;
+    case 11:
+        list.clean();
+        list.display();
+        break;
+    }
 
     //////////part 2 //////////////////////
+    cout << "Part 2" << endl;
     CircularList concernA, concernB, commonProducts;
     int s1, s2;
     cout << "enter the size of first list" << endl;
@@ -579,7 +668,7 @@ int main()
     }
     for (int i = 1; i <= s2; i++) {
         product p1;
-        string str = to_string(i*2);
+        string str = "product" + to_string(i*2);
         p1.name = str;
         concernB.createnode(p1);
     }
