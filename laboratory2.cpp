@@ -41,7 +41,267 @@ struct node
     product data;
     node *next;
 };
-class CircularList
+class List {
+
+private:
+    node* head, * tail;
+public:
+    List()
+    {
+        head = NULL;
+        tail = NULL;
+    }
+    void createnode(product value)
+    {
+        node* temp = new node;
+        temp->data = value;
+        temp->next = NULL;
+        if (head == NULL)
+        {
+            head = temp;
+            tail = temp;
+            temp = NULL;
+        }
+        else
+        {
+            tail->next = temp;
+            tail = temp;
+        }
+
+    }
+    void display()
+    {
+        node* temp = new node;
+        temp = head;
+        while (temp != NULL)
+        {
+            cout << temp->data.name << "\n";
+            temp = temp->next;
+        }
+    }
+    node* get_head() {
+        return head;
+    }
+    int amount() 
+    {
+        int Amount = 0;
+        node* temp = new node;
+        temp = head;
+        while (temp != NULL)
+        {
+            temp = temp->next;
+            ++Amount;
+        }
+        return Amount;
+    }
+    //required methods
+    void moove_by_n_possitions(int pos_of_elem, int n)
+    {
+        node* previous = new node;
+        node* current = new node;
+        node* _next = new node;
+        previous = head;
+        for (int i = 1; i < pos_of_elem - 1; i++)
+        {
+            previous = previous->next;
+        }
+        current = previous->next;
+        _next = current->next;
+        for (int i = 0; i < n; i++) {
+            if (previous->next == NULL) { previous->next = head; }
+            previous->next = _next;
+            current->next = _next->next;
+            _next->next = current;
+        }
+    }
+    List copy()
+    {
+        List temp;
+        node* point = new node;
+        point = head;
+        while (point != NULL)
+        {
+            temp.createnode(point->data);
+            point = point->next;
+        }
+        return temp;
+    }
+    void insert_start(product value)/////////////same////////////
+    {
+        node* temp = new node;
+        temp->data = value;
+        temp->next = head;
+        head = temp;
+    }
+    List merge(List object)
+    {
+        node* point = new node;
+        point = head;
+        while (point != NULL)
+        {
+            object.createnode(point->data);
+            point = point->next;
+        } 
+        return object;
+    }
+    void delete_from_n_possition(int n)////////////same///////////////////
+    {
+        node* previous = new node;
+        node* current = new node;
+        current = head;
+        while (n > 1)
+        {
+            previous = current;
+            current = current->next;
+            --n;
+        }
+        previous->next = current->next;
+        delete current;
+    }
+    void insert_after_position(int pos, product value)//same//////////////////////
+    {
+        node* pre = new node;
+        node* cur = new node;
+        node* temp = new node;
+        cur = head;
+        for (int i = 1; i < pos; i++)
+        {
+            pre = cur;
+            cur = cur->next;
+        }
+        temp->data = value;
+        pre->next = temp;
+        temp->next = cur;
+    }
+    List list_of_same(List object) {
+        List result;
+        //node* point = new node;
+        //point = head;
+        //node* point_obj = new node;
+        //node* obj_head = new node;
+        //for (int i = 1; i < amount(); i++) {
+        //    obj_head = object.get_head();
+        //    for (int j = 1; j < object.amount(); j++) {                
+        //        if (point == point_obj || point->data == point_obj->data)
+        //        {
+        //            result.createnode(point->data);
+        //        }
+        //        point_obj = point_obj->next;
+        //    }
+        //    point = point->next;
+        //}
+        //return result;
+
+        node* point = new node;
+        point = head;
+        node* point_obj = new node;
+        node* obj_head = object.get_head();
+        do
+        {
+            point_obj = obj_head;
+            do
+            {
+
+                if (point == point_obj || point->data == point_obj->data)
+                {
+                    result.createnode(point->data);
+                }
+                point_obj = point_obj->next;
+
+            } while (point_obj != NULL);
+            point = point->next;
+        } while (point != NULL);
+        return result;
+    }
+    void sort_by_increase()///////////////////same//////////////////////
+    {
+        node* current = new node;
+        node* index = new node;
+        int n = amount();
+        int succes = 1;
+        current = head;
+        index = current->next;
+        while (succes != 0) {
+            n = amount();
+            while (n > 2) {
+                --n;
+                succes = 0;
+                if (current->data > index->data) {
+                    ++succes;
+                    product prod = current->data;
+                    current->data = index->data;
+                    index->data = prod;
+                }
+                //Compare data of currentand index node.If current's data is greater than the index's data then, swap the data between them.
+                //in the if block succes +1;
+                current = current->next;
+                index = index->next;
+            }
+        }
+    }
+    void sort_by_decrease() //////////////saame////////////
+    {
+        node* current = new node;
+        node* index = new node;
+        int n = amount();
+        int succes = 1;
+        current = head;
+        index = current->next;
+        while (succes != 0) {
+            n = amount();
+            while (n > 2) {
+                --n;
+                succes = 0;
+                if (current->data < index->data) {
+                    ++succes;
+                    product prod = current->data;
+                    current->data = index->data;
+                    index->data = prod;
+                }
+                //Compare data of currentand index node.If current's data is less than the index's data then, swap the data between them.
+                //in the if block succes +1;
+                current = current->next;
+                index = index->next;
+            }
+        }
+    }
+    void delete_each_n(int n)
+    {
+        int count = 1;
+        int amount = 0;
+        node* temp = new node;
+        temp = head;
+        while (temp != NULL)
+        {
+            temp = temp->next;
+            ++amount;
+        } 
+        for (int i = 0; i < amount; i++) {
+            if (count % n == 0) {
+                delete_from_n_possition(count);
+            }
+            ++count;
+        }
+
+    }
+    void clean()//////same////////////////
+    {
+        int n = amount();
+        node* previous = new node;
+        node* current = new node;
+        previous = head;
+        while (n > 2)
+        {
+            --n;
+            current = previous->next;
+            delete previous;
+            previous = current;
+
+        }
+        head = NULL;
+    }
+};
+class CircularList : List
 {
 private:
     node * head, * tail;
