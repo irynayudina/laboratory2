@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include<string>
-#include <ctime>
 using namespace std;
 struct product {
     string name;
@@ -44,7 +43,7 @@ struct node
 };
 class List {
 
-private:
+public:
     node* head, * tail;
 public:
     List()
@@ -82,6 +81,9 @@ public:
     }
     node* get_head() {
         return head;
+    }
+    void set_head(node* n) {
+        head = n;
     }
     int amount() 
     {
@@ -132,7 +134,7 @@ public:
         }
         return temp;
     }
-    void insert_start(product value)/////////////same////////////
+    void insert_start(product value)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
     {
         node* temp = new node;
         temp->data = value;
@@ -150,7 +152,7 @@ public:
         } 
         return object;
     }
-    void delete_from_n_possition(int n)////////////same///////////////////
+    void delete_from_n_possition(int n)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
     {
         if (n > amount()) { return; }
         if (n == 1) { clean(); return; }
@@ -167,7 +169,7 @@ public:
         previous->next = current->next;
         delete current;
     }
-    void insert_after_position(int pos, product value)//same//////////////////////
+    void insert_after_position(int pos, product value)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
     {
         if (pos > amount()) { return; }
         node* pre = new node;
@@ -207,7 +209,7 @@ public:
         } while (point != NULL);
         return result;
     }
-    void sort_by_increase()///////////////////same//////////////////////
+    void sort_by_increase()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
     {
         node* current = new node;
         node* index = new node;
@@ -239,7 +241,7 @@ public:
             }
         }
     }
-    void sort_by_decrease() //////////////same////////////
+    void sort_by_decrease()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
     {
         node* current = new node;
         node* index = new node;
@@ -293,13 +295,13 @@ public:
         }
 
     }
-    void clean()//////same////////////////
+    void clean()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
     {
         int n = amount();
         node* previous = new node;
         node* current = new node;
-        previous = head;
-        while (n > 2)
+        previous = get_head();
+        while (n > 1)
         {
             --n;
             current = previous->next;
@@ -307,18 +309,19 @@ public:
             previous = current;
 
         }
-        head = NULL;
+        delete previous;
+        set_head(NULL);
     }
 };
-class CircularList : List
+class CircularList : public List
 {
-private:
-    node * head, * tail;
+//private:
+//    node * head, * tail;
 public:
     CircularList()
     {
         head = NULL;
-        tail = NULL;
+        tail = head;
     }
     void createnode(product value)
     {
@@ -352,6 +355,9 @@ public:
     }
     node* get_head() {
         return head;
+    }
+    void set_head(node* n) {
+        head = n;
     }
     int amount() {
         int Amount = 0;
@@ -455,6 +461,128 @@ public:
             }
             ++count;
         }        
+    }
+    void insert_start(product value)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    {
+        node* temp = new node;
+        temp->data = value;
+        temp->next = head;
+        head = temp;
+    }
+    void delete_from_n_possition(int n)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    {
+        if (n > amount()) { return; }
+        if (n == 1) { clean(); return; }
+        node* previous = new node;
+        node* current = new node;
+        current = head;
+
+        while (n > 1)
+        {
+            previous = current;
+            current = current->next;
+            --n;
+        }
+        previous->next = current->next;
+        delete current;
+    }
+    void insert_after_position(int pos, product value)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    {
+        if (pos > amount()) { return; }
+        node* pre = new node;
+        node* cur = new node;
+        node* temp = new node;
+        cur = head;
+
+        for (int i = 1; i < pos; i++)
+        {
+            pre = cur;
+            cur = cur->next;
+        }
+        temp->data = value;
+        pre->next = temp;
+        temp->next = cur;
+    }
+    void sort_by_increase()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    {
+        node* current = new node;
+        node* index = new node;
+        int n = amount();
+        if (n == 1) { return; }
+        current = head;
+        index = current->next;
+        if (n == 2 && current->data > index->data) {
+            product prod = current->data;
+            current->data = index->data;
+            index->data = prod;
+            return;
+        }
+        else if (n == 2) { return; }
+        int succes = 1;
+        while (succes != 0) {
+            n = amount();
+            while (n > 2) {
+                --n;
+                succes = 0;
+                if (current->data > index->data) {
+                    ++succes;
+                    product prod = current->data;
+                    current->data = index->data;
+                    index->data = prod;
+                }
+                current = current->next;
+                index = index->next;
+            }
+        }
+    }
+    void sort_by_decrease()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    {
+        node* current = new node;
+        node* index = new node;
+        int n = amount();
+        if (n == 1) { return; }
+        current = head;
+        index = current->next;
+        if (n == 2 && current->data > index->data) {
+            product prod = current->data;
+            current->data = index->data;
+            index->data = prod;
+            return;
+        }
+        else if (n == 2) { return; }
+        int succes = 1;
+        while (succes != 0) {
+            n = amount();
+            while (n > 2) {
+                --n;
+                succes = 0;
+                if (current->data < index->data) {
+                    ++succes;
+                    product prod = current->data;
+                    current->data = index->data;
+                    index->data = prod;
+                }
+                current = current->next;
+                index = index->next;
+            }
+        }
+    }
+    void clean()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    {
+        int n = amount();
+        node* previous = new node;
+        node* current = new node;
+        previous = get_head();
+        while (n > 1)
+        {
+            --n;
+            current = previous->next;
+            delete previous;
+            previous = current;
+
+        }
+        delete previous;
+        set_head(NULL);
     }
 };
 
@@ -578,7 +706,6 @@ int main()
         concernB.createnode(p1);
     }
     cout << "concern A" << endl;
-    concernA.display();
     concernA.display();
     cout << "concern B" << endl;
     concernB.display();
