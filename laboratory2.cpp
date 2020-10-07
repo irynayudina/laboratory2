@@ -386,13 +386,13 @@ public:
         } while (point != head);
         return temp;
     }
-    void insert_start(product value)
+    /*void insert_start(product value)
     {
         node* temp = new node;
         temp->data = value;
         temp->next = head;
         head = temp;
-    }
+    }*/
     CircularList merge(CircularList object)
     {
         node* point = new node;
@@ -404,7 +404,7 @@ public:
         } while (point != head);
         return object;
     }
-    void delete_from_n_possition(int n) 
+    /*void delete_from_n_possition(int n) 
     {
         node* previous = new node;
         node* current = new node;
@@ -417,8 +417,8 @@ public:
         }
         previous->next = current->next;
         delete current;
-    }
-    void insert_after_position(int pos, product value)
+    }*/
+    /*void insert_after_position(int pos, product value)
     {
         node* pre = new node;
         node* cur = new node;
@@ -432,7 +432,7 @@ public:
         temp->data = value;
         pre->next = temp;
         temp->next = cur;
-    }
+    }*/
     CircularList list_of_same(CircularList object) {
         CircularList result;
         //node* point = new node;
@@ -473,56 +473,56 @@ public:
         } while (point != head);
         return result;
     }
-    void sort_by_increase() {
-        node* current = new node;
-        node* index = new node;
-        int n = amount();
-        int succes = 1;
-        current = head;
-        index = current->next;
-        while (succes != 0) {
-            n = amount();
-            while (n > 2) {
-                --n;
-                succes = 0;
-                if (current->data > index->data) {
-                    ++succes;
-                    product prod = current->data;
-                    current->data = index->data;
-                    index->data = prod;
-                }
-                //Compare data of currentand index node.If current's data is greater than the index's data then, swap the data between them.
-                //in the if block succes +1;
-                current = current->next;
-                index = index->next;
-            }
-        }        
-    }
-    void sort_by_decrease() {
-        node* current = new node;
-        node* index = new node;
-        int n = amount();
-        int succes = 1;
-        current = head;
-        index = current->next;
-        while (succes != 0) {
-            n = amount();
-            while (n > 2) {
-                --n;
-                succes = 0;
-                if (current->data < index->data) {
-                    ++succes;
-                    product prod = current->data;
-                    current->data = index->data;
-                    index->data = prod;
-                }
-                //Compare data of currentand index node.If current's data is less than the index's data then, swap the data between them.
-                //in the if block succes +1;
-                current = current->next;
-                index = index->next;
-            }
-        }
-    }
+    //void sort_by_increase() {
+    //    node* current = new node;
+    //    node* index = new node;
+    //    int n = amount();
+    //    int succes = 1;
+    //    current = head;
+    //    index = current->next;
+    //    while (succes != 0) {
+    //        n = amount();
+    //        while (n > 2) {
+    //            --n;
+    //            succes = 0;
+    //            if (current->data > index->data) {
+    //                ++succes;
+    //                product prod = current->data;
+    //                current->data = index->data;
+    //                index->data = prod;
+    //            }
+    //            //Compare data of currentand index node.If current's data is greater than the index's data then, swap the data between them.
+    //            //in the if block succes +1;
+    //            current = current->next;
+    //            index = index->next;
+    //        }
+    //    }        
+    //}
+    //void sort_by_decrease() {
+    //    node* current = new node;
+    //    node* index = new node;
+    //    int n = amount();
+    //    int succes = 1;
+    //    current = head;
+    //    index = current->next;
+    //    while (succes != 0) {
+    //        n = amount();
+    //        while (n > 2) {
+    //            --n;
+    //            succes = 0;
+    //            if (current->data < index->data) {
+    //                ++succes;
+    //                product prod = current->data;
+    //                current->data = index->data;
+    //                index->data = prod;
+    //            }
+    //            //Compare data of currentand index node.If current's data is less than the index's data then, swap the data between them.
+    //            //in the if block succes +1;
+    //            current = current->next;
+    //            index = index->next;
+    //        }
+    //    }
+    //}
     void delete_each_n(int n) {
         int count = 1;
         int amount = 0;
@@ -541,7 +541,7 @@ public:
         }
         
     }
-    void clean() 
+  /*  void clean() 
     {
         int n = amount();
         node* previous = new node;
@@ -556,11 +556,15 @@ public:
             
         }
         head = NULL;
-    }
+    }*/
 };
 
 int main()
 {
+    ////part 1 //////////////////////////
+    List list;
+
+    //////////part 2 //////////////////////
     CircularList concernA, concernB, commonProducts;
     int s1, s2;
     cout << "enter the size of first list" << endl;
@@ -569,7 +573,7 @@ int main()
     cin >> s2;
     for (int i = 1; i <= s1; i++) {
         product p1;
-        string str = to_string(i);
+        string str = "product" + to_string(i);
         p1.name = str;
         concernA.createnode(p1);
     }
