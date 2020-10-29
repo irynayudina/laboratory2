@@ -1,44 +1,27 @@
 #pragma once
 #include <iostream>
-struct product {
-    int name;
-    bool operator<(const product& p) {
-
-        if (this->name < p.name) {
-            return true;
-        }
-        else { return false; }
-    }
-    bool operator>(const product& p) {
-
-        if (this->name > p.name) {
-            return true;
-        }
-        else { return false; }
-    }
-    bool operator==(const product& p) {
-        if (this->name == p.name) { return true; }
-        else return false;
-    }
-};
+template <class T>
 struct node
 {
-    product data;
-    node* next;
+    T data;
+    node<T>* next;
+    /*T& operator*() const { return *node; }
+    T* operator->() const { return node; }*/
 };
+template <class T>
 class List {
 
 public:
-    node* head, * tail;
+    node<T>* head, * tail;
 public:
     List()
     {
         head = NULL;
         tail = NULL;
     }
-    void createnode(product value)
+    void createnode(T value)
     {
-        node* temp = new node;
+        node<T>* temp = new node<T>;
         temp->data = value;
         temp->next = NULL;
         if (head == NULL)
@@ -56,24 +39,24 @@ public:
     }
     void display()
     {
-        node* temp = new node;
+        node<T>* temp = new node<T>;
         temp = head;
         while (temp != NULL)
         {
-            std::cout << temp->data.name << "\n";
+            std::cout << temp->data<< "\n";
             temp = temp->next;
         }
     }
-    node* get_head() {
+    node<T>* get_head() {
         return head;
     }
-    void set_head(node* n) {
+    void set_head(node<T>* n) {
         head = n;
     }
     int amount()
     {
         int Amount = 0;
-        node* temp = new node;
+        node<T>* temp = new node<T>;
         temp = head;
         while (temp != NULL)
         {
@@ -85,10 +68,11 @@ public:
     //required methods
     void moove_by_n_possitions(int pos_of_elem, int n)
     {
-        if (pos_of_elem > amount() || n > amount() - pos_of_elem) { return; }
-        node* previous = new node;
-        node* current = new node;
-        node* _next = new node;
+        int amnt = amount();
+        if (pos_of_elem > amnt || n > amnt - pos_of_elem) { return; }
+        node<T>* previous = new node<T>;
+        node<T>* current = new node<T>;
+        node<T>* _next = new node<T>;
         previous = head;
 
         for (int i = 1; i < pos_of_elem - 1; i++)
@@ -110,7 +94,7 @@ public:
     List copy()
     {
         List temp;
-        node* point = new node;
+        node<T>* point = new node<T>;
         point = head;
         while (point != NULL)
         {
@@ -119,16 +103,16 @@ public:
         }
         return temp;
     }
-    void insert_start(product value)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    void insert_start(T value)
     {
-        node* temp = new node;
+        node<T>* temp = new node<T>;
         temp->data = value;
         temp->next = head;
         head = temp;
     }
     List merge(List object)
     {
-        node* point = new node;
+        node<T>* point = new node<T>;
         point = head;
         while (point != NULL)
         {
@@ -137,12 +121,12 @@ public:
         }
         return object;
     }
-    void delete_from_n_possition(int n)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    void delete_from_n_possition(int n)
     {
         if (n > amount()) { return; }
         if (n == 1) { clean(); return; }
-        node* previous = new node;
-        node* current = new node;
+        node<T>* previous = new node<T>;
+        node<T>* current = new node<T>;
         current = head;
 
         while (n > 1)
@@ -154,12 +138,12 @@ public:
         previous->next = current->next;
         delete current;
     }
-    void insert_after_position(int pos, product value)//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    void insert_after_position(int pos, T value)
     {
         if (pos > amount()) { return; }
-        node* pre = new node;
-        node* cur = new node;
-        node* temp = new node;
+        node<T>* pre = new node<T>;
+        node<T>* cur = new node<T>;
+        node<T>* temp = new node<T>;
         cur = head;
 
         for (int i = 1; i < pos; i++)
@@ -173,10 +157,10 @@ public:
     }
     List list_of_same(List object) {
         List result;
-        node* point = new node;
+        node<T>* point = new node<T>;
         point = head;
-        node* point_obj = new node;
-        node* obj_head = object.get_head();
+        node<T>* point_obj = new node<T>;
+        node<T>* obj_head = object.get_head();
         do
         {
             point_obj = obj_head;
@@ -194,16 +178,16 @@ public:
         } while (point != NULL);
         return result;
     }
-    void sort_by_increase()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    void sort_by_increase()
     {
-        node* current = new node;
-        node* index = new node;
+        node<T>* current = new node<T>;
+        node<T>* index = new node<T>;
         int n = amount();
         if (n == 1) { return; }
         current = head;
         index = current->next;
         if (n == 2 && current->data > index->data) {
-            product prod = current->data;
+            T prod = current->data;
             current->data = index->data;
             index->data = prod;
             return;
@@ -217,7 +201,7 @@ public:
                 succes = 0;
                 if (current->data > index->data) {
                     ++succes;
-                    product prod = current->data;
+                    T prod = current->data;
                     current->data = index->data;
                     index->data = prod;
                 }
@@ -226,16 +210,16 @@ public:
             }
         }
     }
-    void sort_by_decrease()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    void sort_by_decrease()
     {
-        node* current = new node;
-        node* index = new node;
+        node<T>* current = new node<T>;
+        node<T>* index = new node<T>;
         int n = amount();
         if (n == 1) { return; }
         current = head;
         index = current->next;
         if (n == 2 && current->data > index->data) {
-            product prod = current->data;
+            T prod = current->data;
             current->data = index->data;
             index->data = prod;
             return;
@@ -249,7 +233,7 @@ public:
                 succes = 0;
                 if (current->data < index->data) {
                     ++succes;
-                    product prod = current->data;
+                    T prod = current->data;
                     current->data = index->data;
                     index->data = prod;
                 }
@@ -264,7 +248,7 @@ public:
         if (n == 1) { clean(); return; }
         int count = 1;
         int _amount = 0;
-        node* temp = new node;
+        node<T>* temp = new node<T>;
         temp = head;
 
         while (temp != NULL)
@@ -280,11 +264,11 @@ public:
         }
 
     }
-    void clean()//******************WILL BE INHERITED IN CIRCULAR LIST CLASS***********************
+    void clean()
     {
         int n = amount();
-        node* previous = new node;
-        node* current = new node;
+        node<T>* previous = new node<T>;
+        node<T>* current = new node<T>;
         previous = get_head();
         while (n > 1)
         {
